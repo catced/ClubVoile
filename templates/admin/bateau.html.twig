@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des bateaux{% endblock %}
+
+{% block body %}
+    <h1>Liste des bateaux</h1>
+    <ul>
+        {% for bateau in bateaux %}
+            <li>{{ bateau.nom }} - {{ bateau.description }}</li>
+        {% else %}
+            <li>Aucun bateau trouvé</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

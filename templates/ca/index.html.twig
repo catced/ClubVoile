@@ -1,0 +1,36 @@
+    {% extends 'base.html.twig' %}
+
+    {% block title %}Liste des Comptes Rendus{% endblock %}
+    
+    {% block body %}
+        <div class="container mt-4">
+            <h1 class="mb-4">Comptes Rendus de Réunion</h1>
+    
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th>Date</th>
+                        <th>Chemin</th> <!-- Aligner cette colonne à gauche -->
+                        <th>Fichier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for compteRendu in compteRendus %}
+                        <tr class="text-center">
+                            <td>{{ compteRendu.updatedAt ? compteRendu.updatedAt|date('d/m/Y') : 'Pas de date disponible' }}</td>
+                            <td class="text-left">{{ compteRendu.chemin }}</td> <!-- Aligner cette cellule à gauche -->
+                            <td>
+                                {% if compteRendu.chemin %}
+                                    <a href="{{ asset('uploads/ca/' ~ compteRendu.chemin) }}" class="btn btn-sm btn-primary">Voir le fichier</a>
+                                {% else %}
+                                    <span class="text-muted">Pas de fichier disponible</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+    
+    

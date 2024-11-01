@@ -1,0 +1,16 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        ca:
+            uri_prefix: /uploads/ca
+            upload_destination: '%kernel.project_dir%/public/uploads/ca'
+            namer: 
+                service: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_remove: true
+            delete_on_update: true
+            
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    #        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

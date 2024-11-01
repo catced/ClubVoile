@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning{% endblock %}
+
+{% block header_image %}
+    {# Rien ici, on remplace l'image par un bloc vide #}
+{% endblock %}
+
+{% block body %}
+<div >
+    <h1 style="font-size: 16px; margin-left: 10px; margin-top: 10px; font-weight: bold">Planning</h1>
+    <h1 style="font-size: 12px; margin-left: 20px">Veuillez vous inscrire pour les sorties.</h1>
+    <h1 style="font-size: 12px; margin-left: 20px">Si vous êtes déjà inscrit, un bouton Inscrit/Annuler apparait</h1>
+    <h1 style="font-size: 12px; margin-left: 20px">Présence d'un symbole vert, un membre est inscrit</h1>
+</div>
+
+<style>
+    .btn-inscrire {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 10px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .btn-inscrire:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .btn-inscrire:active {
+        transform: scale(0.98);
+    }
+
+    .btn-inscrire.annuler {
+        background-color: #dc3545;
+    }
+
+    .btn-inscrire.annuler:hover {
+        background-color: #c82333;
+    }
+</style>
+
+{% set current_date = "now" | date("Y-m-d") %}
+{% set has_valid_planning = false %}
+
+{% for planning in plannings %}
+    {% if (planning.date | date("Y-m-d")) > (current_date | date_modify('-1 day')).format('Y-m-d') %}
+        {% set has_valid_planning = true %}
+    {% endif %}
+{% endfor %}
+
+{% if has_valid_planning %}
+    <table border="1" style="margin-left: 20px; border: 1px solid #000; border-collapse: collapse">
+        <thead>
+            <tr>
+                <th style="border-right: 1px solid #000; border-bottom: 1px solid #000; text-align: center; width: 180px">Membre</th>
+                {% for planning in plannings %}
+                    {% if (planning.date | date("Y-m-d")) > (current_date | date_modify('-1 day')).format('Y-m-d') %}
+                        <th style="border-right: 1px solid #000; border-bottom: 1px solid #000; text-align: center; font-size: 12px">{{ planning.date | date('d/m/Y') }} <br> ({{ planning.typejournee }})</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for membre in membresActifs %}
+                <tr>
+                    <td style="border-right: 1px solid #000; width: 200px;">{{ membre.nom }} {{ membre.prenom }}</td>
+                    {% for planning in plannings %}
+                        {% if (planning.date | date("Y-m-d")) > (current_date | date_modify('-1 day')).format('Y-m-d') %}
+                            <td style="text-align: center; vertical-align: middle; border-right: 1px solid #000">
+                                {% if membre.id != membreActif.id %}
+                                    {% if membre in inscriptions[planning.id] %}
+                                        <img src="{{ asset('images/green_check.png') }}" alt="Inscrit" width="16" height="16" style="display: inline-block; vertical-align: middle;">
+                                    {% else %}
+                                        <span></span>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if membre.id == membreActif.id %}
+                                    {% if membreActif in inscriptions[planning.id] %}
+                                        <form action="{{ path('annuler_inscription_planning', { 'id': planning.id, 'membreId': membre.id }) }}" method="post">
+                                            <button type="submit" class="btn-inscrire annuler">Inscrit (Annuler)</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="{{ path('inscription_planning', { 'id': planning.id, 'membreId': membre.id }) }}" method="post">
+                                            <button type="submit" class="btn-inscrire">S'inscrire</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td style="border-right: 1px solid #000; border-top: 1px solid #000"><strong>Total des inscrits </strong></td> <!-- Colonne des totaux -->
+                {% for planning in plannings %}
+                    {% if (planning.date | date("Y-m-d")) > (current_date | date_modify('-1 day')).format('Y-m-d') %}
+                        <td style="border-right: 1px solid #000; border-top: 1px solid #000; text-align: center"><strong>{{ inscriptions[planning.id] | length }}</strong></td> <!-- Nombre total d'inscrits -->
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    
+{% else %}
+    <p>Aucune sortie disponible à venir.</p>
+{% endif %}
+
+{% endblock %}

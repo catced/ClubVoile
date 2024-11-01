@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Formulaire d'inscription</h1>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="inscriptionTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="form-tab" data-bs-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="true">Inscription</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tarifs-tab" data-bs-toggle="tab" href="#tarifs" role="tab" aria-controls="tarifs" aria-selected="false">Tarifs</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="inscriptionTabsContent">
+        <!-- Onglet Inscription -->
+        <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.nomadherent, 'Nom', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.nomadherent, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.telephone, 'Téléphone', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.plain_password, 'Mot de passe', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.plain_password.first, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                {{ form_label(form.plain_password.second, 'Répéter le mot de passe', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.plain_password.second, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            
+
+            
+
+            {# Affichage des messages de succès #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Onglet Tarifs -->
+        <div class="tab-pane fade" id="tarifs" role="tabpanel" aria-labelledby="tarifs-tab">
+            <h2 class="mt-4">Tarifs par catégorie</h2>
+        
+            {% for categorie, tarifs in tarifsParCategorie %}
+                <div class="mb-4">
+                    <h3>{{ categorie }}</h3>
+                    <div class="list-group">
+                        {% for tarif in tarifs %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="d-flex flex-grow-1">
+                                    <div class="me-3" style="min-width: 200px;">
+                                        <strong>{{ tarif.libelle }}</strong>
+                                    </div>
+                                    <div class="text-muted" style="min-width: 100px;">
+                                        {{ tarif.tarif | number_format(2, ',', ' ') }} €
+                                    </div>
+                                </div>
+                                <div class="input-group" style="width: 100px;">
+                                    <input type="number" name="quantites[{{ tarif.id }}]" value="0" min="0" class="form-control"/>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+          
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Valider l'inscription</button>
+            </div>
+        </div> 
+        {{ form_end(form) }} 
+    </div>
+   
+{# {% endfor %} #}
+</div>
+
+
+{% endblock %}

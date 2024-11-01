@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Planning des Sorties</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Bateau</th>
+            <th>Type de sortie</th>
+            <th>Membre</th>
+            <th>Confirmation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for membre in membres %}
+        <tr>
+            <td>{{ membre.nom }}</td>
+            <td>{{ membre.prenom }}</td>
+            <td>{{ membre.email }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

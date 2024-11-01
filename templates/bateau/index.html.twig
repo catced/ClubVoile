@@ -1,0 +1,46 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos bateaux{% endblock %}
+
+{% block body %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>image</th>
+                <th>longueur</th>
+                <th>largeur</th>
+                <th>tirant d'eau</th>
+                <th>surface gv</th>
+                <th>genois</th>
+                <th>spi</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for bateau in bateaux %}
+                <li>
+                    <p>{{ bateau.nom }}</p>
+                    <p>{{ bateau.description }}</p>
+                    <p>{{ bateau.imagepath }}</p>
+                    <p>{{ bateau.longueur }}</p>
+                    <p>{{ bateau.largeur }}</p>
+                    <p>{{ bateau.tiranteau }}</p>
+                    <p>{{ bateau.surfgv }}</p>
+                    <p>{{ bateau.genois }}</p>
+                    <p>{{ bateau.spi }}</p>
+
+                   
+                </li>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun bateau pour le moment.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+ 
+{% endblock %}

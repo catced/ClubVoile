@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Les bateaux{% endblock %}
+
+
+
+{% block body %}
+<p style="color:blue; margin-left:70px">Pour naviguer sur nos bateaux, vous devez adhérer à la SNS et posséder un forfait navigation.</p>
+<p style="color:blue; margin-left:70px; margin-right:50px">Venez naviguer toute l'année les samedis et/ou dimanches selon la méteo pour acquérir les bases, pour vous perfectionnez ou participer à des régates. Vous serez encadrés par une équipe de bénévoles passionnés.</p>
+
+<div class="container mt-4">
+    <h1 class="mb-4" style="color:blue">Notre flotte</h1>
+
+    <table class="table table-bordered table-hover table-striped" style="color:blue">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Longueur</th>
+                <th>Largeur</th>
+                <th>Image</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for bateau in bateaux %}
+                <tr class="text-center">
+                    <td>{{ bateau.nom }}</td>
+                    <td class="text-left">{{ bateau.description | replace({'<div>': '', '</div>': ''}) }}</td>
+                    <td>{{ bateau.longueur }}</td>
+                    <td>{{ bateau.largeur }}</td>
+                    <td>
+                        {% if bateau.imagepath %}
+                            <a href="{{ asset('/images/bateaux/' ~ bateau.imagepath) }}" class="btn btn-sm btn-primary">Voir le bateau</a>
+                        {% else %}
+                            <span class="text-muted">Pas d'image</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+

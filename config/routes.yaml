@@ -1,0 +1,54 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+accueil:
+    path: /
+    controller: App\Controller\AccueilController::index
+
+bateau:
+    path: /bateau
+    controller: App\Controller\BateauController::index
+
+inscription:
+    path: /inscription
+    controller: App\Controller\InscriptionController::register
+
+activite:
+    path: /activite
+    controller: App\Controller\ActiviteController::index
+
+activite_inscription:
+    path: /activite/inscription
+    controller: App\Controller\ActiviteController::subscribe
+
+ca:
+    path: /ca
+    controller: App\Controller\CAController::index
+
+admin:
+    path: /admin
+    controller: App\Controller\Admin\DashboardController::index
+
+planning:
+    path: /planning
+    controller: App\Controller\PlanningController::index
+
+annuler_inscription_planning:
+    path: /annuler/inscription/planning/{id}/{membreId}
+    controller: App\Controller\PlanningController::annulerInscription
+    methods: [POST]
+
+ca_list:
+    path: /ca
+    controller: App\Controller\CAController::index
+
+ca_nouveau:
+    path: /ca/nouveau
+    controller: App\Controller\CAController::new
+
+membredashboard:
+    path: /membredashboard
+    controller: App\Controller\membreController::new

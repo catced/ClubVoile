@@ -1,0 +1,49 @@
+{# <h1>Mes sessions de sortie</h1>
+
+{% if planning is empty %}
+    <p>Vous n'avez aucune session de sortie prévue.</p>
+{% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type de journée</th>
+                <th>Type de bateau</th>
+                <th>Confirmation</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+            <tr>
+                <td>{{ planning.date|date('d/m/Y') }}</td>
+                <td>{{ planning.typeJournee|join(', ') }}</td>
+                <td>{{ planning.bateautype.nom }}</td>
+                <td>{{ planning.isConfirmed ? 'Confirmé' : 'En attente' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+{% endif %} #}
+
+<h1>Mes sorties</h1>
+
+<h1>Mes sorties</h1>
+
+{% if plannings is empty %}
+    <p>Aucune sortie programmée.</p>
+{% else %}
+    {% for planning in plannings %}
+        <h2>Sortie du {{ planning.date|date('d/m/Y') }}</h2>
+        <p>Bateau : {{ planning.bateautype.nom }}</p>
+        <p>Type de sortie : {{ planning.typeJournee|join(', ') }}</p>
+        <p>Membres participants :</p>
+        <ul>
+            {% for participant in planning.participants %}
+                <li>{{ participant.nom }} {{ participant.prenom }}</li>
+            {% else %}
+                <li>Aucun participant pour cette sortie.</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}
+

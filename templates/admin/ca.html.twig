@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les comptes rendus du CA{% endblock %}
+
+{% block body %}
+    <h1>Les CA</h1>
+    <ul>
+        {% for ca in cas %}
+            <li>{{ ca.date}} - {{ ca.chemin }}</li>
+        {% else %}
+            <li>Aucun compten rendu du CA</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{# {% block body %}
+<h1>Planning des Sorties</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Bateau</th>
+            <th>Type de sortie</th>
+            <th>Membre</th>
+            <th>Confirmation</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for planning in plannings %}
+        <tr>
+            <td>{{ planning.date|date('d/m/Y') }}</td>
+            <td>{{ planning.bateautype.bateautype }}</td>
+            <td>{{ planning.typeJournee|capitalize }}</td>
+            <td>{{ planning.membre.nom }}</td>
+            <td>
+                {% if planning.isConfirmed %}
+                    Inscription confirmée
+                {% else %}
+                    <form method="post" action="{{ path('confirm_inscription', { 'id': planning.id }) }}">
+                        <input type="hidden" name="typeJournee" value="{{ planning.typeJournee }}">
+                        <button type="submit">Confirmer pour {{ planning.typeJournee }}</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} #}
+
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th></th> <!-- Cellule vide en haut à gauche -->
+            {% for planning in plannings %}
+                <th>{{ planning.date | date('d/m/Y') }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for planning in plannings %}
+                <th>{{ planning.bateautype.bateautype }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for membre in membresActifs %}
+            <tr>
+                <td>{{ membre.nom }} {{ membre.prenom }}</td>
+
+                {% for planning in plannings %}
+                    <td>
+                        {# Liste des participants inscrits à cette sortie #}
+                        <ul>
+                            {% for participant in planning.participants %}
+                                <li>
+                                    {{ participant.nom }} {{ participant.prenom }}
+                                    
+                                    {# Si ce participant est inscrit, on affiche la croix verte #}
+                                    <img src="{{ asset('images/green-check.png') }}" alt="Inscrit" width="16" height="16">
+                                </li>
+                            {% else %}
+                                <li>Aucun participant</li>
+                            {% endfor %}
+                        </ul>
+
+                        {# Bouton d'inscription ou désinscription pour le membre connecté #}
+                        {% if membre.id == app.user.id %}
+                            {% if planning.participants.contains(app.user) %}
+                                <form action="{{ path('annuler_inscription_planning', { 'id': planning.id, 'membreId': membre.id }) }}" method="post">
+                                    <button type="submit">Inscrit (Annuler)</button>
+                                </form>
+                            {% else %}
+                                <form action="{{ path('inscription_planning', { 'id': planning.id, 'membreId': membre.id }) }}" method="post">
+                                    <button type="submit">S'inscrire</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

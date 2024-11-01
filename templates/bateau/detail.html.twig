@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du Bateau{% endblock %}
+
+{% block body %}
+    <h1>Détails du Bateau : {{ bateau.nom }}</h1>
+  
+    <p>Description : {{ bateau.description|striptags }}</p>
+    <p>Chemin de l'image : {{ bateau.imagePath }}</p>
+    <p>Longueur : {{ bateau.longueur }}</p>
+    <p>Largeur : {{ bateau.largeur }}</p>
+    <p>Tirant d'eau : {{ bateau.tiranteau }}</p>
+    <p>Surface GV : {{ bateau.surfgv }}</p>
+    <p>Génois : {{ bateau.genois }}</p>
+    <p>Spi : {{ bateau.spi }}</p>
+
+    <a href="{{ path('bateaux_liste') }}">Retour à la liste des bateaux</a>
+{% endblock %}

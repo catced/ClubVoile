@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Flotte{% endblock %}
+
+{% block body %}
+    <h1>Notre flotte</h1>
+    <ul>
+        {% for bateau in bateaux %}
+            <li>
+                <h2>{{ bateau.nom }}</h2>
+                <p>{{ bateau.description }}</p>
+                <img src="{{ asset(bateau.imagePath) }}" alt="{{ bateau.nom }}">
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

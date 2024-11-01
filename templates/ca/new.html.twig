@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Compte Rendu{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau Compte Rendu</h1>
+
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.date) }}
+        {{ form_row(form.contenu) }}
+
+        {# Champ pour le fichier avec le bouton "Parcourir" #}
+        {{ form_row(form.fichier) }}
+
+        <button type="submit">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}

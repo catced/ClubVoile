@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord Membre{% endblock %}
+
+{% block body %}
+    <h1 style="font-size: 20px; margin-left:10px">Bonjour {{ app.user.nom }} {{ app.user.prenom }}</h1>
+
+    <ul>
+        <li><a href="{{ path('planning') }}">Voir le planning</a></li>
+        <li><a href="{{ path('ca_list') }}">Consulter les comptes rendus du CA</a></li>
+    </ul>
+{% endblock %}
